@@ -58,7 +58,7 @@ ALTER TABLE tarefas ADD CONSTRAINT id_Unique UNIQUE(id);
 
 -- QUESTAO 5 Testando inserts
 INSERT INTO tarefas VALUES (2147483653, 'limpar portas do 1o andar', '32323232911', 2, 'A');
-INSERT INTO tarefas VALUES (2147483653, 'aparar a grama da área frontal', '32323232911', 2, 'A');
+ALTER TABLE tarefas ADD CONSTRAINT statusDom CHECK(status = 'P' OR status = 'E' OR status = 'C');
 
 
 ----- QUESTAO 6
@@ -108,7 +108,7 @@ INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALU
 INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('12345675907', '1980-05-07', 'Pedro da Silva7', 'SUP_LIMPEZA', 'P', '12345678900');
 INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('12345675908', '1980-05-07', 'Pedro da Silva8', 'LIMPEZA', 'J', '12345678900');
 INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('12345675909', '1980-05-07', 'Pedro da Silva9', 'LIMPEZA', 'S', '12345678900');
-INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('12345675910', '1980-05-07', 'Pedro da Silva10', 'LIMPEZA', 'P', '12345678900');
+INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('98765432322', '1980-05-07', 'Pedro da Silva10', 'LIMPEZA', 'P', '12345678900');
 
 -- QUESTAO 9 Inserts invalidos
 INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALUES ('12345675901', null        , 'Pedro da Silva11', 'SUP_LIMPEZA' , 'J', null);
@@ -126,17 +126,13 @@ INSERT INTO funcionario (cpf, data_nasc, nome, funcao, nivel, superior_cpf) VALU
 ----- QUESTAO 10 Adicionando restrincoes
 ALTER TABLE tarefas ADD CONSTRAINT tarefas_func FOREIGN KEY(func_resp_cpf) REFERENCES funcionario(cpf) ON DELETE CASCADE;
 ALTER TABLE tarefas ADD CONSTRAINT tarefas_func2 FOREIGN KEY(func_resp_cpf) REFERENCES funcionario(cpf) ON DELETE RESTRICT;
+DELETE FROM tarefas WHERE status = 'E';
 
-
------ QUESTAO 11 Adicionando resticoes
+----- QUESTAO 11 Alterando resticoes
 ALTER TABLE tarefas ALTER COLUMN func_resp_cpf DROP NOT NULL;
-ALTER TABLE tarefas ADD CONSTRAINT cpfNull CHECK(status = 'E' AND func_resp_cpf IS NULL);
-
--- QUESTAO 11 Alterando constrains da questao 10
 ALTER TABLE tarefas DROP CONSTRAINT  tarefas_func;
 ALTER TABLE tarefas DROP CONSTRAINT  tarefas_func2;
-ALTER TABLE tarefas ADD  CONSTRAINT  tarefas_func FOREIGN KEY(func_resp_cpf) REFERENCES funcionario(cpf) ON DELETE SET NULL;
-ALTER TABLE tarefas ADD CONSTRAINT cpfNull CHECK(status = 'E' AND func_resp_cpf IS NULL);
+ALTER TABLE tarefas ADD  CONSTRAINT  tarefas_func3 FOREIGN KEY(func_resp_cpf) REFERENCES funcionario(cpf) ON DELETE SET NULL;
 
 -- QUESTAO 11 Removendo um funcionario com status 'E's
 DELETE FROM tarefas WHERE status = 'E' ;
