@@ -50,3 +50,4 @@ CREATE TABLE enderecos_clientes {
     CONSTRAINT tiposDeEnderecos CHECK (tipo_endereco IN ('residencia', 'trabalho', 'outro')
 };
 
+-- parei na questao 9
