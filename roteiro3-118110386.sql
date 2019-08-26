@@ -14,7 +14,8 @@ CREATE TABLE funcionarios {
     cpf_func            CHAR(11) UNIQUE PRIMARY KEY,
     nome_func           TEXT     NOT NULL,
     cargo_func          TEXT, 
-    CONSTRAINT tiposDeCargo CHECK (cargo_func IN ('farmaceutico', 'vendedor', 'entregador', 'caixa', 'administrador', 'gerente',NULL))
+    func_eh_gerente     BOOLEAN  UNIQUE,
+    CONSTRAINT tiposDeCargo CHECK (cargo_func IN ('farmaceutico', 'vendedor', 'entregador', 'caixa', 'administrador', NULL))
 };
 
 CREATE TABLE medicamentos {
