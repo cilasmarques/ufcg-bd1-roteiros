@@ -11,7 +11,7 @@ CREATE TABLE farmacias (
 
 
 --deve ser executado com sucesso 
-INSERT INTO farmacias (cnpj, tipo_farmacia, bairro, sede, cidade, estado, cpf_gerente_farm, cpf_clientes_farm) VALUES('12345678901234567', 'redeFarma', 'catole', 'sedeL', 'campina grande', 'PB', null, null);
+INSERT INTO farmacias (cnpj, tipo_farmacia, bairro, sede, cidade, estado, cpf_gerente_farm, cpf_clientes_farm) VALUES('12345678901234567', 'sede', 'catole', 'sedeL', 'campina grande', 'PB', null, null);
 
 CREATE TABLE funcionarios (
     cpf_func            CHAR(11)    PRIMARY KEY,
