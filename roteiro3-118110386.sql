@@ -9,6 +9,10 @@ CREATE TABLE farmacias (
     cpf_clientes_farm       CHAR(11) 
 );
 
+
+--deve ser executado com sucesso 
+INSERT INTO farmacias (cnpj, tipo_farmacia, bairro, sede, cidade, estado, cpf_gerente_farm, cpf_clientes_farm) VALUES('12345678901234567', 'redeFarma', 'catole', 'sedeL', 'campina grande', 'PB', null, null);
+
 CREATE TABLE funcionarios (
     cpf_func            CHAR(11)    PRIMARY KEY,
     cnpj_farm_func      CHAR(17),
@@ -83,3 +87,6 @@ ALTER TABLE enderecos_clientes ADD CONSTRAINT tiposDeEnderecos  CHECK (tipo_end 
 --entregas
 ALTER TABLE entregas ADD CONSTRAINT end_cli_entrega  FOREIGN KEY   (end_cli_ent)    REFERENCES enderecos_clientes(id_end);
 ALTER TABLE entregas ADD CONSTRAINT id_venda_entrega FOREIGN KEY   (id_ent)         REFERENCES vendas(id_venda);
+
+
+---- COMANDOS ADICIONAIS
