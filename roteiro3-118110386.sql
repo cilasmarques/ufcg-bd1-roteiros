@@ -19,20 +19,10 @@ CREATE TABLE funcionarios (
 );
 
 CREATE TABLE medicamentos (
-    id_med                  SERIAL PRIMARY KEY,
+    id_med                  INTEGER PRIMARY KEY,
     nome_med                TEXT,
     vendidos_med            INTEGER,     
     venda_com_receita_med   BOOLEAN
-);
-
-CREATE TABLE vendas (
-    venda_realizada        INTEGER PRIMARY KEY,
-    venda_para_cliente     BOOLEAN
-);
-
-CREATE TABLE entregas (
-    id_ent              INTEGER PRIMARY KEY,  
-    end_cli_ent         SERIAL
 );
 
 CREATE TABLE clientes (
@@ -44,7 +34,7 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE enderecos_clientes (
-    id_end              SERIAL      PRIMARY KEY,
+    id_end              INTEGER     PRIMARY KEY,
     cpf_cli_end         CHAR(11)    NOT NULL,
     rua_end             VARCHAR(40) NOT NULL,
     bairro_end          VARCHAR(20) NOT NULL,
@@ -52,6 +42,17 @@ CREATE TABLE enderecos_clientes (
     numero_end          INTEGER     NOT NULL,
     tipo_end            VARCHAR(20) NOT NULL
 );
+
+CREATE TABLE vendas (
+    venda_realizada        INTEGER PRIMARY KEY,
+    venda_para_cliente     BOOLEAN
+);
+
+CREATE TABLE entregas (
+    id_ent              INTEGER PRIMARY KEY,  
+    end_cli_ent         INTEGER
+);
+
 
 --farmacias
 ALTER TABLE farmacias ADD CONSTRAINT cpf_gerente        FOREIGN KEY  (cpf_gerente_farm)      REFERENCES funcionarios(cpf_func);
@@ -65,8 +66,8 @@ ALTER TABLE funcionarios ADD CONSTRAINT func_vendedor   CHECK        ((vendas_fu
                                                                   OR (vendas_func >= 0 AND cargo_func IN ('vendedor')));
 
 --medicamentos
+ALTER TABLE farmacias    ADD CONSTRAINT id_med_venda                    FOREIGN KEY   (id_med)      REFERENCES vendas(venda_para_cliente);
 ALTER TABLE medicamentos ADD CONSTRAINT naoExcluiMed                     CHECK        (vendidos_med > 0);
-ALTER TABLE medicamentos ADD CONSTRAINT medicamento_com_receita_vendido  CHECK        (venda_com_receita_med = TRUE);
 
 --clientes
 ALTER TABLE clientes ADD CONSTRAINT endereco_cliente      FOREIGN KEY  (end_cliente_cli)            REFERENCES  enderecos_clientes(id_end);
@@ -106,3 +107,12 @@ INSERT INTO funcionarios (cpf_func, cnpj_farm_func, nome_func, cargo_func, func_
 INSERT INTO funcionarios (cpf_func, cnpj_farm_func, nome_func, cargo_func, func_eh_gerente, vendas_func) VALUES ('12345678914', '12345678901234561', 'CilasB', 'caixa', FALSE, -1);
 INSERT INTO farmacias (cnpj, tipo_farmacia, bairro, sede, cidade, estado, cpf_gerente_farm, cpf_clientes_farm) VALUES('12345678901234563', 'filial', 'catole4', 'sedeN', 'campina grande', 'PB', '12345678913', '12345678912');
 INSERT INTO farmacias (cnpj, tipo_farmacia, bairro, sede, cidade, estado, cpf_gerente_farm, cpf_clientes_farm) VALUES('12345678901234564', 'filial', 'catole5', 'sedeO', 'campina grande', 'PB', '12345678914', '12345678915');
+INSERT INTO medicamentos (id_med, nome_med, vendidos_med, venda_com_receita_med) VALUES(1010, 'RIVOTRIL', 1, TRUE);
+INSERT INTO medicamentos (id_med, nome_med, vendidos_med, venda_com_receita_med) VALUES(1012, 'RIVOTRI2', 0, FALSE);
+INSERT INTO vendas (venda_realizada, venda_para_cliente) VALUES(1010, TRUE);
+INSERT INTO vendas (venda_realizada, venda_para_cliente) VALUES(1012, FALSE);
+INSERT INTO entregas (id_ent, end_cli_ent) VALUES(1012, 0);
+
+--deve dar erro
+INSERT INTO entregas (id_ent, end_cli_ent) VALUES(1010, 12);
+
