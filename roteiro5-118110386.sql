@@ -27,12 +27,17 @@ SELECT p.pnumber AS num_proj, AVG(e.salary) AS media_sal FROM project AS p, work
 --Q9
 SELECT p.pnumber AS num_proj, p.pname AS proj_nome, AVG(e.salary) AS media_sal FROM project AS p, works_on AS w, employee AS e WHERE (p.pnumber = w.pno AND w.essn = e.ssn) GROUP BY p.pnumber;
 
---Q10 deu preguiça de terminar
---SELECT enotp92.fname, enotp92.salary FROM project AS p, works_on AS wnot92, works_on AS w92,employee AS enotp92, employee AS ep92 
---WHERE (wnot92.pno != 92 AND wnot92.essn = enotp92.ssn AND w92.pno= 92 AND ep92.ssn = w92.essn );
+--Q10
+SELECT em.fname, em.salary FROM (SELECT MAX(e.salary) AS s FROM employee AS e JOIN works_on AS w ON (w.pno = 92 AND w.essn = e.ssn)) AS salary92, employee AS em WHERE salary92.s < em.salary;
 
 --Q11
 SELECT e.ssn, COUNT(w.essn) FROM employee AS e FULL OUTER JOIN works_on AS w ON (w.essn = e.ssn) GROUP BY(e.ssn) ORDER BY(COUNT(w.essn));
 
---Q12 nao terminado
-SELECT p.pnumber, COUNT(e.ssn) FROM employee AS e ^Corks_on AS w ON (e.ssn = w.essn);
+--Q12
+SELECT * FROM (SELECT w.pno AS num_proj, COUNT(e.ssn) AS qtd_func FROM (employee AS e FULL OUTER JOIN works_on AS w ON (w.essn = e.ssn)) GROUP BY w.pno) AS ew WHERE ew.qtd_func < 5;
+
+--Q13
+SELECT DISTINCT s.fname FROM employee AS s, dependent AS d, works_on AS w, project AS p WHERE (p.plocation LIKE '%Sugarland%' AND p.pnumber = w.pno AND w.essn = s.ssn AND s.ssn = d.essn);
+
+--Q15 INCOMPLETA
+--SELECT DISTINCT e.fname, e.lname FROM (SELECT * FROM works_on AS w WHERE w.essn = '123456789') AS p, works_on AS ww, employee AS e WHERE p.pno = ww.pno AND ww.essn = e.ssn AND e.ssn != '123456789';
