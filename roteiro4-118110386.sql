@@ -17,37 +17,94 @@ SELECT * FROM project;
 SELECT * FROM works_on;
 
 --Q7
-SELECT fname, lname FROM employee WHERE sex LIKE'M';
+SELECT fname,
+       lname
+  FROM employee 
+ WHERE sex LIKE'M'; 
 
 --Q8
-SELECT fname FROM employee WHERE sex='M' AND superssn is null;
+SELECT fname
+  FROM employee 
+ WHERE sex='M' 
+   AND superssn is null; 
 
 --Q9
-SELECT e.fname, s.fname FROM employee AS e, employee AS s WHERE e.superssn is not null AND e.superssn = s.ssn;
+SELECT e.fname,
+       s.fname
+  FROM employee AS e,
+       employee      AS s 
+ WHERE e.superssn is not null 
+   AND e.superssn = s.ssn; 
 
 --Q10
-SELECT e.fname FROM employee AS e, employee AS s WHERE s.fname LIKE 'Franklin' AND e.superssn = s.ssn;
+SELECT e.fname
+  FROM employee AS e,
+       employee      AS s 
+ WHERE s.fname LIKE 'Franklin' 
+   AND e.superssn = s.ssn; 
 
 --Q11
-SELECT d.dname, dl.dlocation FROM department AS d, dept_locations AS dl WHERE d.dnumber = dl.dnumber;
+SELECT d.dname,
+       dl.dlocation
+  FROM department AS d,
+       dept_locations  AS dl 
+ WHERE d.dnumber = dl.dnumber; 
 
 --Q12
-SELECT d.dname FROM department AS d, dept_locations AS dl WHERE d.dnumber = dl.dnumber AND dl.dlocation LIKE '%S%';
+SELECT d.dname         
+  FROM department AS d,
+       dept_locations  AS dl 
+ WHERE d.dnumber = dl.dnumber 
+   AND dl.dlocation LIKE '%S%'; 
 
 --Q13
-SELECT e.fname, e.lname, de.dependent_name FROM dependent AS de, employee AS e WHERE de.essn = e.ssn; 
+SELECT e.fname,
+       e.lname,
+       de.dependent_name 
+  FROM dependent    AS de,
+       employee          AS e 
+ WHERE de.essn = e.ssn; 
 
 --Q14
-SELECT e.fname || ' ' || e.lname AS full_name, e.salary FROM employee AS e WHERE e.salary > 50000.00; 
+SELECT e.fname || ' ' ||         
+       e.lname,
+       e.salary 
+  FROM employee AS e 
+ WHERE e.salary > 50000.00; 
 
 --Q15
-SELECT p.pname, d.dname FROM project AS p, department AS d WHERE d.dnumber = p.dnum ;
+SELECT p.pname      AS pname,
+       d.dname      AS dname
+  FROM project AS p,
+       department   AS d 
+ WHERE d.dnumber = p.dnum ; 
 
 --Q16
-SELECT p.pname, e.fname FROM project AS p, employee AS e, department AS d WHERE p.pnumber > 30 AND p.dnum = d.dnumber AND e.ssn = d.mgrssn;
+SELECT p.pname      AS pname,
+       e.fname      AS fname
+  FROM project AS p,
+       employee     AS e,
+       department   AS d 
+ WHERE p.pnumber > 30 
+   AND p.dnum = d.dnumber 
+   AND e.ssn = d.mgrssn; 
 
 --Q17      
-SELECT p.pname, e.fname FROM project AS p, employee AS e, works_on AS w WHERE p.pnumber = w.pno AND w.essn = e.ssn;
+SELECT p.pname      AS pname,
+       e.fname      AS fname
+  FROM project AS p,
+       employee     AS e,
+       works_on     AS w 
+ WHERE p.pnumber = w.pno 
+   AND w.essn = e.ssn; 
 
 --Q18
-SELECT e.fname, de.dependent_name, de.relationship FROM dependent AS de, employee AS e, works_on AS w WHERE w.pno = 91 AND w.essn = e.ssn AND e.ssn = de.essn;
+SELECT e.fname           AS fname,
+       de.dependent_name AS dependentName,
+       de.relationship   AS relationship
+  FROM dependent    AS de,
+       employee          AS e,
+       works_on          AS w 
+ WHERE w.pno = 91 
+   AND w.essn = e.ssn 
+   AND e.ssn = de.essn; 

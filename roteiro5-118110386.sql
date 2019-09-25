@@ -1,22 +1,22 @@
---q1
+--Q1
 SELECT count(ssn) AS countssn
   FROM employee 
  WHERE sex = 'F'; 
 
---q2
+--Q2
 SELECT avg(salary) AS avgsalary
   FROM employee 
  WHERE address LIKE '%TX' 
    AND sex = 'M'; 
 
---q3
+--Q3
 SELECT superssn   AS superssn,
        count(ssn) AS countssn
   FROM employee 
 GROUP BY (superssn) 
 ORDER BY (count(ssn)); 
 
---q4
+--Q4
 SELECT s.fname       AS fname,
        count(e.ssn)  AS ssn
   FROM employee AS e join employee AS s 
@@ -24,7 +24,7 @@ SELECT s.fname       AS fname,
 GROUP BY s.fname 
 ORDER BY count(e.ssn); 
 
---q5
+--Q5
 SELECT s.fname       AS fname,
        count(e.ssn)  AS ssn
   FROM employee AS e left outer join employee AS s 
@@ -32,14 +32,14 @@ SELECT s.fname       AS fname,
 GROUP BY s.fname 
 ORDER BY count(e.ssn); 
 
---q6
+--Q6
 SELECT min(p.qtdFuncs) AS qtdFuncs 
   FROM (select pno,
        count(pno)      AS qtdFuncs 
   FROM works_on 
 GROUP BY pno)   AS p;  
 
---q7
+--Q7
 SELECT *                                       
   FROM (select w1.pno,
        count(w1.pno) AS qtdFuncs1 
