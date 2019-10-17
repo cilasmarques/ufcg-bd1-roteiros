@@ -1,2 +1,1 @@
-# bd1
-Roteiros de banco de dados 1
+# roteiros_bd1
